@@ -1,10 +1,7 @@
 package com.than.covidapp_challengeschapter7
 
 import android.app.Application
-import com.than.covidapp_challengeschapter7.di.databaseModule
-import com.than.covidapp_challengeschapter7.di.networkModule
-import com.than.covidapp_challengeschapter7.di.repositoryModule
-import com.than.covidapp_challengeschapter7.di.viewModelModule
+import com.than.covidapp_challengeschapter7.di.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -21,6 +18,7 @@ class MainApp : Application(){
                 listOf(
                     networkModule,
                     databaseModule,
+                    dataStoreModule,
                     repositoryModule,
                     viewModelModule
                 )

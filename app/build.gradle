@@ -88,4 +88,7 @@ dependencies {
     // Koin main features for Android
     def koin_version= "3.2.0"
     implementation "io.insert-koin:koin-android:$koin_version"
+
+    // Image Picker
+    implementation 'com.github.dhaval2404:imagepicker:2.1'
 }

@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.than.covidapp_challengeschapter7.R
+import com.than.covidapp_challengeschapter7.data.DataStoreManager.Companion.DEF_ID
 import com.than.covidapp_challengeschapter7.data.model.DetailCountryCases
 import com.than.covidapp_challengeschapter7.data.room.FavoriteEntity
 import com.than.covidapp_challengeschapter7.databinding.FragmentDetailBinding
@@ -20,6 +22,7 @@ class DetailFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: DetailFragmentViewModel by viewModel()
     private val args: DetailFragmentArgs by navArgs()
+    private var idUser = DEF_ID
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,8 +36,14 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val dataDetail = args.dataDetail
+        viewModel.getUserPref()
+        viewModel.userPref.observe(viewLifecycleOwner){
+            if(it.id_user != DEF_ID){
+                idUser = it.id_user!!
+                viewModel.checkFavorite(idUser, dataDetail.country)
+            }
+        }
 
-        viewModel.checkFavorite(1, dataDetail.country)
         viewModel.dataFavoriteByCountry.observe(viewLifecycleOwner){
             if(it != null){
                 if (it.country_name.contains(dataDetail.country)){
@@ -53,9 +62,12 @@ class DetailFragment : Fragment() {
             tvActiveNumber.text = dataDetail.active.toString()
             tvDeathNumber.text = dataDetail.death.toString()
             tvRecoveredNumber.text = dataDetail.recovered.toString()
-            btnFavorite.setOnClickListener {
-                addFavorite(dataDetail)
-            }
+        }
+        binding.btnFavorite.setOnClickListener {
+            addFavorite(dataDetail)
+        }
+        binding.btnBack.setOnClickListener {
+            findNavController().navigate(R.id.action_detailFragment_to_homeFragment)
         }
     }
 
@@ -69,12 +81,12 @@ class DetailFragment : Fragment() {
             }
         }
         if (isFavorite){
-            deleteFavorite(1, dataDetail.country)
+            deleteFavorite(idUser, dataDetail.country)
         } else {
             viewModel.insertFavorite(
                 FavoriteEntity(
                     null,
-                    1,
+                    idUser,
                     dataDetail.country,
                     dataDetail.cases,
                     dataDetail.flag,
@@ -90,7 +102,7 @@ class DetailFragment : Fragment() {
                 Toast.LENGTH_SHORT
             ).show()
         }
-        viewModel.checkFavorite(1, dataDetail.country)
+        viewModel.checkFavorite(idUser, dataDetail.country)
     }
 
     private fun deleteFavorite(id_user: Int, country_name: String) {

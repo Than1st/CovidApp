@@ -7,6 +7,19 @@
     tools:context=".ui.detail.DetailFragment">
 
     <!-- TODO: Update blank fragment layout -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_back"
+        android:layout_width="110dp"
+        android:layout_height="50dp"
+        android:drawableLeft="@drawable/ic_baseline_chevron_left"
+        android:text="Back"
+        android:drawableTint="@color/white"
+        android:layout_margin="8dp"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText,RtlHardcoded" />
+
     <ImageView
         android:id="@+id/iv_flag"
         android:layout_width="match_parent"

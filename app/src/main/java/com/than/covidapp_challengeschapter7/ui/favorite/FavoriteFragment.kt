@@ -1,23 +1,23 @@
 package com.than.covidapp_challengeschapter7.ui.favorite
 
 import android.os.Bundle
-import android.text.TextUtils.isEmpty
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.than.covidapp_challengeschapter7.R
+import com.than.covidapp_challengeschapter7.data.DataStoreManager.Companion.DEF_ID
 import com.than.covidapp_challengeschapter7.data.model.DetailCountryCases
 import com.than.covidapp_challengeschapter7.data.room.FavoriteEntity
 import com.than.covidapp_challengeschapter7.databinding.FragmentFavoriteBinding
-import com.than.covidapp_challengeschapter7.ui.home.HomeFragmentDirections
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FavoriteFragment : Fragment() {
     private var _binding: FragmentFavoriteBinding? = null
     private val binding get() = _binding!!
     private val viewModel: FavoriteFragmentViewModel by viewModel()
+    private var idUser = DEF_ID
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,8 +30,15 @@ class FavoriteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.getUserPref()
+        viewModel.userPref.observe(viewLifecycleOwner){
+            if (it != null){
+                idUser = it.id_user!!
+                binding.tvWelcome.text = getString(R.string.favorite, it.nama)
+                viewModel.getDataFavorite(idUser)
+            }
+        }
 
-        viewModel.getDataFavorite(1)
         viewModel.dataFavorite.observe(viewLifecycleOwner){
             when {
                 it.isEmpty() -> {

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.than.covidapp_challengeschapter7.data.Repository
 import com.than.covidapp_challengeschapter7.data.room.FavoriteEntity
+import com.than.covidapp_challengeschapter7.data.room.UserEntity
 import kotlinx.coroutines.launch
 
 class DetailFragmentViewModel(private val repository: Repository): ViewModel() {
@@ -13,6 +14,8 @@ class DetailFragmentViewModel(private val repository: Repository): ViewModel() {
     private val _dataFavoriteByCountry = MutableLiveData<FavoriteEntity>()
     val dataFavoriteByCountry : LiveData<FavoriteEntity> get() = _dataFavoriteByCountry
 
+    private val _userPref = MutableLiveData<UserEntity>()
+    val userPref : LiveData<UserEntity> get() = _userPref
 
     fun insertFavorite(favoriteEntity: FavoriteEntity){
         viewModelScope.launch {
@@ -29,6 +32,14 @@ class DetailFragmentViewModel(private val repository: Repository): ViewModel() {
     fun deleteFavorite(id_user: Int, country_name: String){
         viewModelScope.launch {
             repository.deleteFavorite(id_user, country_name)
+        }
+    }
+
+    fun getUserPref(){
+        viewModelScope.launch {
+            repository.getUserPref().collect{
+                _userPref.postValue(it)
+            }
         }
     }
 }

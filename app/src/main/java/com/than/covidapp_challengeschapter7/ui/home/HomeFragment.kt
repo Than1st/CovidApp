@@ -1,13 +1,18 @@
 package com.than.covidapp_challengeschapter7.ui.home
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.than.covidapp_challengeschapter7.R
+import com.than.covidapp_challengeschapter7.data.DataStoreManager.Companion.DEF_IMAGE
 import com.than.covidapp_challengeschapter7.data.Status
 import com.than.covidapp_challengeschapter7.data.model.DetailCountryCases
 import com.than.covidapp_challengeschapter7.data.model.GetAllCountryCases
@@ -29,34 +34,73 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.getUserPref()
+        viewModel.getAllDataCases()
         viewModel.getAllCountryCases()
+        var dataUser = "Halo!"
+        viewModel.userPref.observe(viewLifecycleOwner) {
+            if (it != null) {
+                binding.tvWelcome.text = getString(R.string.welcome, it.nama)
+                dataUser = """
+                    Nama : ${it.nama}
+                    Email : ${it.email}
+                    Username : ${it.username}
+                """.trimIndent()
+
+                if (it.image != DEF_IMAGE){
+                    loadImage(Uri.parse(it.image))
+                }
+            }
+        }
         binding.toolbar.setOnClickListener {
-            showAlertDialog()
+            showAlertDialog(dataUser)
         }
         fetchData()
     }
 
-    private fun showAlertDialog() {
+    private fun showAlertDialog(dataUser: String) {
         AlertDialog.Builder(requireContext())
             .setTitle("User Menu")
-            .setMessage("Halo!")
-            .setNeutralButton("Favorite"){ dialog, _ ->
+            .setMessage(dataUser)
+            .setNeutralButton("Favorite") { dialog, _ ->
                 findNavController().navigate(R.id.action_homeFragment_to_favoriteFragment)
+                dialog.dismiss()
+            }
+            .setNegativeButton("Edit Profile") { dialog, _ ->
+                findNavController().navigate(R.id.action_homeFragment_to_editFragment)
+                dialog.dismiss()
+            }
+            .setPositiveButton("Logout") { dialog, _ ->
+                AlertDialog.Builder(requireContext())
+                    .setTitle("Konfirmasi")
+                    .setMessage("Yakin Mau Logout?")
+                    .setPositiveButton("Iya") { dialog1, _ ->
+                        viewModel.deleteUserPref()
+                        Toast.makeText(requireContext(), "Logout Success!", Toast.LENGTH_SHORT)
+                            .show()
+                        findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
+                        dialog1.dismiss()
+                    }
+                    .setNegativeButton("Tidak"){ d, _ ->
+                        d.dismiss()
+                    }
+                    .show()
                 dialog.dismiss()
             }
             .show()
     }
 
     private fun fetchData() {
-        viewModel.countryCases.observe(viewLifecycleOwner){ resource ->
-            when(resource.status){
+        viewModel.countryCases.observe(viewLifecycleOwner) { resource ->
+            when (resource.status) {
                 Status.LOADING -> {
                     binding.pbMain.visibility = View.VISIBLE
                 }
                 Status.SUCCESS -> {
-                    val adapter = HomeAdapter(object: HomeAdapter.OnClickListener{
+                    val adapter = HomeAdapter(object : HomeAdapter.OnClickListener {
                         override fun onClickItem(data: GetAllCountryCases) {
                             val dataDetail = DetailCountryCases(
                                 data.country,
@@ -66,7 +110,8 @@ class HomeFragment : Fragment() {
                                 data.deaths,
                                 data.recovered
                             )
-                            val moveToDetail = HomeFragmentDirections.actionHomeFragmentToDetailFragment(dataDetail)
+                            val moveToDetail =
+                                HomeFragmentDirections.actionHomeFragmentToDetailFragment(dataDetail)
                             findNavController().navigate(moveToDetail)
                         }
                     })
@@ -84,14 +129,16 @@ class HomeFragment : Fragment() {
             }
 
         }
-        viewModel.allDataCases.observe(viewLifecycleOwner){ resource ->
-            when(resource.status){
+        viewModel.allDataCases.observe(viewLifecycleOwner) { resource ->
+            when (resource.status) {
                 Status.LOADING -> {
                     binding.pbMain.visibility = View.VISIBLE
                 }
                 Status.SUCCESS -> {
-                    binding.tvWelcome.text = getString(R.string.welcome, "SulthanLR")
-                    binding.tvAllCases.text = getString(R.string.jumlah_kasus_seluruh_dunia_s, resource.data?.cases.toString())
+                    binding.tvAllCases.text = getString(
+                        R.string.jumlah_kasus_seluruh_dunia_s,
+                        resource.data?.cases.toString()
+                    )
                     binding.pbMain.visibility = View.GONE
                 }
                 else -> {
@@ -105,4 +152,10 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun loadImage(uri: Uri) {
+        Log.d("Cek URI", uri.toString())
+        binding.profileImage.setImageURI(uri)
+//        val s: String = mUri.toString()
+//        val mUri = Uri.parse(s)
+    }
 }

@@ -13,10 +13,13 @@ val databaseModule = module {
             androidContext().applicationContext,
             CovidDatabase::class.java,
             "covidDatabase"
-        ).build()
+        ).fallbackToDestructiveMigration().build()
     }
     single {
         get<CovidDatabase>().favoriteDao()
+    }
+    single {
+        get<CovidDatabase>().userDao()
     }
     singleOf(::DatabaseHelper)
 }

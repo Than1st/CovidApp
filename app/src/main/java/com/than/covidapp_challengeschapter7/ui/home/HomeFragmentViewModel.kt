@@ -8,17 +8,18 @@ import com.than.covidapp_challengeschapter7.data.Repository
 import com.than.covidapp_challengeschapter7.data.Resource
 import com.than.covidapp_challengeschapter7.data.model.GetAllCountryCases
 import com.than.covidapp_challengeschapter7.data.model.GetAllData
+import com.than.covidapp_challengeschapter7.data.room.UserEntity
 import kotlinx.coroutines.launch
 
 class HomeFragmentViewModel(private val repository: Repository) : ViewModel() {
     private val _countryCases = MutableLiveData<Resource<List<GetAllCountryCases>>>()
     val countryCases: LiveData<Resource<List<GetAllCountryCases>>> get() = _countryCases
 
-    private val _countryCasesById = MutableLiveData<Resource<GetAllCountryCases>>()
-    val countryCasesById : LiveData<Resource<GetAllCountryCases>> get() = _countryCasesById
-
     private val _allDataCases = MutableLiveData<Resource<GetAllData>>()
     val allDataCases : LiveData<Resource<GetAllData>> get() = _allDataCases
+
+    private val _userPref = MutableLiveData<UserEntity>()
+    val userPref : LiveData<UserEntity> get() = _userPref
 
     fun getAllCountryCases(){
         viewModelScope.launch {
@@ -30,16 +31,15 @@ class HomeFragmentViewModel(private val repository: Repository) : ViewModel() {
             }
         }
     }
-    fun getAllCountryCasesById(country: String){
+
+    fun getUserPref(){
         viewModelScope.launch {
-            _countryCasesById.postValue(Resource.loading())
-            try {
-                _countryCasesById.postValue(Resource.success(repository.getCountryCasesById(country)))
-            } catch (e: Exception){
-                _countryCasesById.postValue(Resource.error(e.message ?: "Error Occurred"))
+            repository.getUserPref().collect{
+                _userPref.postValue(it)
             }
         }
     }
+
     fun getAllDataCases(){
         viewModelScope.launch {
             _allDataCases.postValue(Resource.loading())
@@ -48,6 +48,11 @@ class HomeFragmentViewModel(private val repository: Repository) : ViewModel() {
             } catch (e: Exception){
                 _allDataCases.postValue(Resource.error(e.message ?: "Error Occurred"))
             }
+        }
+    }
+    fun deleteUserPref(){
+        viewModelScope.launch {
+            repository.deleteUserPref()
         }
     }
 }
