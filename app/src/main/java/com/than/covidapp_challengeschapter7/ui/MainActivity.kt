@@ -8,6 +8,7 @@ import androidx.activity.addCallback
 import com.than.covidapp_challengeschapter7.R
 import kotlin.system.exitProcess
 
+@Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

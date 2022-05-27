@@ -5,7 +5,8 @@ import androidx.room.RoomDatabase
 
 @Database(
     entities = [FavoriteEntity::class, UserEntity::class],
-    version = 2
+    version = 2,
+    exportSchema = false
 )
 abstract class CovidDatabase : RoomDatabase() {
     abstract fun favoriteDao(): FavoriteDao

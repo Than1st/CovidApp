@@ -5,7 +5,7 @@ import androidx.room.*
 @Dao
 interface FavoriteDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addFavorite(favoriteEntity: FavoriteEntity)
+    suspend fun addFavorite(favoriteEntity: FavoriteEntity): Long
 
     @Query("SELECT * FROM favoriteentity WHERE id_user= :id_user AND country_name= :country_name")
     suspend fun getFavorite(id_user: Int, country_name: String): FavoriteEntity

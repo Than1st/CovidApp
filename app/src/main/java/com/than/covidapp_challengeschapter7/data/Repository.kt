@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 class Repository(private val apiHelper: ApiHelper, private val databaseHelper: DatabaseHelper, private val dataStoreManager: DataStoreManager) {
     // Retrofit
     suspend fun getAllCountryCases() = apiHelper.getAllCountryCases()
-    suspend fun getCountryCasesById(country: String) = apiHelper.getCountryCasesById(country)
+//    suspend fun getCountryCasesById(country: String) = apiHelper.getCountryCasesById(country)
     suspend fun getAllDataCases() = apiHelper.getAllDataCases()
     
     // Database
@@ -26,7 +26,7 @@ class Repository(private val apiHelper: ApiHelper, private val databaseHelper: D
 
     // User
 //    suspend fun checkUsernameExists(username: String): UserEntity = databaseHelper.checkUsernameExists(username)
-    suspend fun getAllUser() = databaseHelper.getALlUser()
+//    suspend fun getAllUser() = databaseHelper.getALlUser()
     suspend fun insertUser(userEntity: UserEntity) = databaseHelper.insertUser(userEntity)
     suspend fun loginUser(username: String, password: String) = databaseHelper.loginUser(username, password)
     suspend fun updateUser(userEntity: UserEntity) = databaseHelper.updateUser(userEntity)
