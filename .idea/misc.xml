@@ -10,13 +10,14 @@
         <entry key="..\:/Users/SulthanLR/AndroidStudioProjects/CovidApp_ChallengesChapter7/app/src/main/res/drawable/ic_edit.xml" value="0.154" />
         <entry key="..\:/Users/SulthanLR/AndroidStudioProjects/CovidApp_ChallengesChapter7/app/src/main/res/drawable/ic_person.xml" value="0.122" />
         <entry key="..\:/Users/SulthanLR/AndroidStudioProjects/CovidApp_ChallengesChapter7/app/src/main/res/drawable/ic_register.xml" value="0.154" />
+        <entry key="..\:/Users/SulthanLR/AndroidStudioProjects/CovidApp_ChallengesChapter7/app/src/main/res/drawable/icon_login.xml" value="0.117" />
         <entry key="..\:/Users/SulthanLR/AndroidStudioProjects/CovidApp_ChallengesChapter7/app/src/main/res/drawable/toolbar_shape.xml" value="0.122" />
         <entry key="..\:/Users/SulthanLR/AndroidStudioProjects/CovidApp_ChallengesChapter7/app/src/main/res/layout/activity_main.xml" value="0.209375" />
         <entry key="..\:/Users/SulthanLR/AndroidStudioProjects/CovidApp_ChallengesChapter7/app/src/main/res/layout/fragment_detail.xml" value="0.25" />
         <entry key="..\:/Users/SulthanLR/AndroidStudioProjects/CovidApp_ChallengesChapter7/app/src/main/res/layout/fragment_edit.xml" value="0.209375" />
         <entry key="..\:/Users/SulthanLR/AndroidStudioProjects/CovidApp_ChallengesChapter7/app/src/main/res/layout/fragment_favorite.xml" value="0.22" />
         <entry key="..\:/Users/SulthanLR/AndroidStudioProjects/CovidApp_ChallengesChapter7/app/src/main/res/layout/fragment_home.xml" value="0.25" />
-        <entry key="..\:/Users/SulthanLR/AndroidStudioProjects/CovidApp_ChallengesChapter7/app/src/main/res/layout/fragment_login.xml" value="0.22" />
+        <entry key="..\:/Users/SulthanLR/AndroidStudioProjects/CovidApp_ChallengesChapter7/app/src/main/res/layout/fragment_login.xml" value="0.5" />
         <entry key="..\:/Users/SulthanLR/AndroidStudioProjects/CovidApp_ChallengesChapter7/app/src/main/res/layout/fragment_register.xml" value="0.1953125" />
         <entry key="..\:/Users/SulthanLR/AndroidStudioProjects/CovidApp_ChallengesChapter7/app/src/main/res/layout/list_item.xml" value="0.209375" />
       </map>

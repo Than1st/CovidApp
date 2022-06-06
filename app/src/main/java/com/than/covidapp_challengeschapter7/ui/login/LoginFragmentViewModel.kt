@@ -33,8 +33,8 @@ class LoginFragmentViewModel(private val repository: Repository): ViewModel() {
 
     fun loginUser(username: String, password: String){
         viewModelScope.launch {
-//            _loginData.postValue(repository.loginUser(username, password))
-            _loginData.value = repository.loginUser(username, password)
+            _loginData.postValue(repository.loginUser(username, password))
+//            _loginData.value = repository.loginUser(username, password)
         }
     }
 }
