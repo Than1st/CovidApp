@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_homeFragment_to_editFragment"
             app:destination="@id/editFragment" />
+        <argument
+            android:name="userEntity"
+            app:argType="com.than.covidapp_challengeschapter7.data.room.UserEntity" />
     </fragment>
     <fragment
         android:id="@+id/detailFragment"

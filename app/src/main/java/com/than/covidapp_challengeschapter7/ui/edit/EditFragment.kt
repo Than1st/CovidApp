@@ -87,7 +87,8 @@ class EditFragment : Fragment() {
                     viewModel.setUserPref(user)
                     viewModel.updateUser(user)
                     Toast.makeText(requireContext(), "Update Success", Toast.LENGTH_SHORT).show()
-                    findNavController().navigate(R.id.action_editFragment_to_homeFragment)
+                    val toHome = EditFragmentDirections.actionEditFragmentToHomeFragment(user)
+                    findNavController().navigate(toHome)
                 }
             }
         }

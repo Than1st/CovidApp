@@ -1,6 +1,5 @@
 package com.than.covidapp_challengeschapter7.ui.register
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -233,28 +232,35 @@ class RegisterFragment : Fragment() {
                                 password.value,
                                 DEF_IMAGE
                             )
+                            viewModel.insertUser(user)
+                            Toast.makeText(
+                                requireContext(),
+                                "Register Success!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
 //                    viewModel.checkUsernameExists(username)
-                            var isUsed = false
+//                            var isUsed = false
 //                    val checkUser = viewModel.checkUsernameExists(username)
-                            viewModel.userData.observe(viewLifecycleOwner) {
-                                if (it != null) {
-                                    if (it.username == username.value) {
-                                        isUsed = true
-                                    }
-                                    if (isUsed) {
-                                        AlertDialog.Builder(requireContext())
-                                            .setMessage("Username Sudah digunakan!")
-                                    } else {
-                                        viewModel.insertUser(user)
-                                        Toast.makeText(
-                                            requireContext(),
-                                            "Register Success!",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                        findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
-                                    }
-                                }
-                            }
+//                            viewModel.userData.observe(viewLifecycleOwner) {
+//                                if (it != null) {
+//                                    if (it.username == username.value) {
+//                                        isUsed = true
+//                                    }
+//                                    if (isUsed) {
+//                                        AlertDialog.Builder(requireContext())
+//                                            .setMessage("Username Sudah digunakan!")
+//                                    } else {
+//                                        viewModel.insertUser(user)
+//                                        Toast.makeText(
+//                                            requireContext(),
+//                                            "Register Success!",
+//                                            Toast.LENGTH_SHORT
+//                                        ).show()
+//                                        findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+//                                    }
+//                                }
+//                            }
 //                    if (checkUser == null){
 //                        binding.tilUsername.error = ""
 //                        viewModel.insertUser(user)

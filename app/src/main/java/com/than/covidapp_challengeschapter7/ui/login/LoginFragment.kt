@@ -45,11 +45,11 @@ class LoginFragment : Fragment() {
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
             viewModel.getUserPref()
-            viewModel.userPref.observe(viewLifecycleOwner){
-                if (it.id_user != DEF_ID && findNavController().currentDestination?.id == R.id.loginFragment){
+            viewModel.userPref.observe(viewLifecycleOwner) {
+                if (it.id_user != DEF_ID && findNavController().currentDestination?.id == R.id.loginFragment) {
                     findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                 } else {
-                    setContent { 
+                    setContent {
                         Chapter8Theme {
                             Surface(
                                 color = MaterialTheme.colors.background,
@@ -159,7 +159,7 @@ class LoginFragment : Fragment() {
                         android.app.AlertDialog.Builder(requireContext())
                             .setTitle("")
                             .setMessage("Username/Password Kosong!")
-                            .setPositiveButton("Iya"){dialog,_ ->
+                            .setPositiveButton("Iya") { dialog, _ ->
                                 dialog.dismiss()
                             }
                             .show()
@@ -170,16 +170,18 @@ class LoginFragment : Fragment() {
                                 android.app.AlertDialog.Builder(requireContext())
                                     .setTitle("")
                                     .setMessage("Username/Password Salah!")
-                                    .setPositiveButton("Iya"){dialog,_ ->
+                                    .setPositiveButton("Iya") { dialog, _ ->
                                         dialog.dismiss()
                                     }
                                     .show()
                             } else {
-                                viewModel.setUserPref(it)
                                 if (findNavController().currentDestination?.id == R.id.loginFragment) {
-                                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+                                    val toHomepage =
+                                        LoginFragmentDirections.actionLoginFragmentToHomeFragment(it)
+                                    findNavController().navigate(toHomepage)
                                 }
                             }
+                            viewModel.loginData.removeObservers(viewLifecycleOwner)
                         }
                     }
                 },
@@ -235,6 +237,27 @@ class LoginFragment : Fragment() {
             }
         }
     }
+
+//    private fun loginAuth() {
+//        viewModel.loginData.observe(viewLifecycleOwner) {
+//            if (it == null) {
+//                android.app.AlertDialog.Builder(requireContext())
+//                    .setTitle("")
+//                    .setMessage("Username/Password Salah!")
+//                    .setPositiveButton("Iya"){dialog,_ ->
+//                        dialog.dismiss()
+//                    }
+//                    .show()
+//            } else {
+//                if (findNavController().currentDestination?.id == R.id.loginFragment) {
+//                    val toHomepage = LoginFragmentDirections.actionLoginFragmentToHomeFragment(it)
+//                    findNavController().navigate(toHomepage)
+//                    viewModel.loginData.removeObservers(viewLifecycleOwner)
+//                }
+//            }
+//            viewModel.loginData.removeObservers(viewLifecycleOwner)
+//        }
+//    }
 }
 
 //    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

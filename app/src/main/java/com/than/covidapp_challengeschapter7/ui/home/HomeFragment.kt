@@ -11,7 +11,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.than.covidapp_challengeschapter7.R
+import com.than.covidapp_challengeschapter7.data.DataStoreManager.Companion.DEF_ID
 import com.than.covidapp_challengeschapter7.data.DataStoreManager.Companion.DEF_IMAGE
 import com.than.covidapp_challengeschapter7.data.Status
 import com.than.covidapp_challengeschapter7.data.model.DetailCountryCases
@@ -23,7 +25,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private val viewModel: HomeFragmentViewModel by viewModel()
-
+    private val args: HomeFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +45,9 @@ class HomeFragment : Fragment() {
         var dataUser = "Halo!"
         viewModel.userPref.observe(viewLifecycleOwner) {
             if (it != null) {
+                if( it.id_user == DEF_ID){
+                    viewModel.setUserPref(args.userEntity)
+                }
                 binding.tvWelcome.text = getString(R.string.welcome, it.nama)
                 dataUser = """
                     Nama : ${it.nama}
