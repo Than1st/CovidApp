@@ -55,4 +55,10 @@ class HomeFragmentViewModel(private val repository: Repository) : ViewModel() {
             repository.deleteUserPref()
         }
     }
+
+    fun setUserPref(userEntity: UserEntity){
+        viewModelScope.launch {
+            repository.setUserPref(userEntity)
+        }
+    }
 }
