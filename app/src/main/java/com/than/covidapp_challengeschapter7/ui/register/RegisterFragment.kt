@@ -76,7 +76,7 @@ class RegisterFragment : Fragment() {
             contentScale = ContentScale.Crop
         )
     }
-
+    // Aku
     @Composable
     fun RegisterForm() {
         val nama = remember { mutableStateOf("") }
